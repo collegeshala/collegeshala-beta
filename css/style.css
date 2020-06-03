@@ -10,6 +10,9 @@
             ************
 */
 
+
+
+
 #logo {
   width: 320px;
   height: 60px;
@@ -34,6 +37,7 @@
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 #home .above-search-bar-text {
@@ -78,6 +82,59 @@
 .seach-box input[type="text"] {
   padding: 20px 20px 20px 35px;
 }
+
+
+
+.we-serve-grid .image-resize {
+    width: 180px;
+}
+
+.we-serve-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 16%);
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.we-serve-grid .images {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+@media screen and (max-width: 950px) {
+    .we-serve-grid {
+      height: 50%;
+      width: 100%;
+      grid-template-columns: repeat(3, 33%);
+      padding: 0;
+    }
+  }
+
+@media screen and (max-width: 600px) {
+  .we-serve-grid {
+    height: 70%;
+    width: 100%;
+    grid-template-columns: repeat(2, 50%);
+    padding: 0;
+  }
+
+  .we-serve-grid .images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .we-serve-grid .image-resize {
+    width: 130px;
+}
+}
+
 
 .services-image {
   width: 110px;
