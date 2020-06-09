@@ -2148,3 +2148,23 @@
 #custom-carousel .custom-img {
    height: 720px; 
 }
+
+/*
+            ************
+        Professor-info Page Styles Starts
+            ************
+*/
+
+/*
+            ************
+        Blog Page Styles Starts
+            ************
+*/
+
+#Blog-section .card-custom-image {
+  height: 200px;
+}
+
+#Blog-section .card-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
