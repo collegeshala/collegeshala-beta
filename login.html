@@ -30,7 +30,9 @@
                 <a id='back' class="navbar-brand" onclick="back()">
                     <img src="./assets/logo/LeftArrow.png" alt="" srcset="" width="35" height="30">
                 </a>
-                <a id="backtext" onclick="back()"><p class="back-label">Back</p></a>
+                <a id="backtext" onclick="back()">
+                    <p class="back-label">Back</p>
+                </a>
             </nav>
         </div>
         <div class="content">
@@ -40,7 +42,7 @@
                 </div>
                 <div id="step-1" class="row details-container">
                     <div class="col-6 image-column">
-                        <img class="info-image" src="./assets/images/signin-card.png" alt="Sign in"/>
+                        <img class="info-image" src="./assets/images/signin-card.png" alt="Sign in" />
                     </div>
                     <div class="col-6 input-column">
                         <input type="text" class="input-text" placeholder="Enter your email address" name="email">
@@ -51,7 +53,7 @@
                 </div>
                 <div id="step-2" class="row details-container" style="display: none;">
                     <div class="col-6 image-column">
-                        <img class="info-image" src="./assets/images/signin-card.png" alt="forgot-password"/>
+                        <img class="info-image" src="./assets/images/signin-card.png" alt="forgot-password" />
                     </div>
                     <div class="col-6 input-column">
                         <p id="password-reset">
@@ -62,7 +64,7 @@
                 </div>
                 <div id="step-3" class="row details-container" style="display: none;">
                     <div class="col-6 image-column">
-                        <img class="info-image" src="./assets/images/signin-card.png" alt="forgot-password"/>
+                        <img class="info-image" src="./assets/images/signin-card.png" alt="forgot-password" />
                     </div>
                     <div class="col-6 input-column">
                         <input type="text" class="input-text" placeholder="Enter Code Send to Phone" name="code">
@@ -70,7 +72,8 @@
                         <input type="password" class="input-text" name="passwordconf" placeholder="Re-type password">
                     </div>
                 </div>
-                <div id="nextbtn" class="next" onmouseover="document.getElementById('nextbtn').style = 'cursor: pointer'" onclick="handleLogin()">
+                <div id="nextbtn" class="next"
+                    onmouseover="document.getElementById('nextbtn').style = 'cursor: pointer'" onclick="handleLogin()">
                     Sign IN
                     <img id="nextimg" src="assets/logo/next.png">
                 </div>
@@ -87,26 +90,26 @@
         function next() {
             console.log(step);
             document.getElementById(`step-${step}`).style = "display: none";
-            (window.innerWidth > 800)?
-                document.getElementById(`step-${step+1}`).style = "display: inline-flex":
-                document.getElementById(`step-${step+1}`).style = "display: initial";
-            if(step === 1){
+            (window.innerWidth > 800) ?
+                document.getElementById(`step-${step + 1}`).style = "display: inline-flex" :
+                document.getElementById(`step-${step + 1}`).style = "display: initial";
+            if (step === 1) {
                 document.getElementById('nextbtn').innerHTML = 'Send Code<img id="nextimg" src="assets/logo/next.png">';
-                document.getElementById('nextbtn').setAttribute('onClick',"handleForgetPassword()");
+                document.getElementById('nextbtn').setAttribute('onClick', "handleForgetPassword()");
             }
-            else if(step === 2){
+            else if (step === 2) {
                 document.getElementById('nextbtn').innerHTML = 'Update Password<img id="nextimg" src="assets/logo/next.png">';
-                document.getElementById('nextbtn').setAttribute('onClick',"handleResetPassword()");
+                document.getElementById('nextbtn').setAttribute('onClick', "handleResetPassword()");
             }
-            step=step+1;
+            step = step + 1;
         }
 
         function back() {
-            if(step != 1) {
+            if (step != 1) {
                 document.getElementById(`step-${step}`).style = "display: none";
-                step = (step === 2)?step - 1:step-2;
-                (window.innerWidth > 800)?
-                    document.getElementById(`step-${step}`).style = "display: inline-flex":
+                step = (step === 2) ? step - 1 : step - 2;
+                (window.innerWidth > 800) ?
+                    document.getElementById(`step-${step}`).style = "display: inline-flex" :
                     document.getElementById(`step-${step}`).style = "display: initial";
                 document.getElementById('nextbtn').innerHTML = 'Sign IN<img id="nextimg" src="assets/logo/next.png">';
                 document.getElementById('nextbtn').setAttribute('onclick', 'handleLogin()');
@@ -123,10 +126,11 @@
                 password: $("input[name='password']").val(),
             }
             var onSuccess = function loginSuccess(result) {
-                console.log('Check user here : ',result);
-                window.localStorage.setItem("idToken", result.idToken.jwtToken)
+                console.log('Check user here : ', result);
+                window.localStorage.setItem("idToken", result.idToken.jwtToken);
+                compareTime(localStorage.getItem("idToken"));
                 let isProf = parseJwt(result.idToken.jwtToken)['custom:isProfessor'];
-                if(isProf === 'true') {
+                if (isProf === 'true') {
                     localStorage.setItem("acc_type", 'professor');
                     window.location.href = "/teacher-dashboard.html";
                 } else {
@@ -137,7 +141,7 @@
             var onFailure = function loginFailure(err) {
                 alert(err);
             }
-            logIn(userData,onSuccess,onFailure);
+            logIn(userData, onSuccess, onFailure);
         }
         function handleForgetPassword() {
             var email = $("input[name='emailforgot']").val();
@@ -147,12 +151,12 @@
         function handleResetPassword() {
             var email = $("input[name='emailforgot']").val();
             var code = $("input[name='code']").val();
-            var password =  $("input[name='password1']").val();
-            var password2 =  $("input[name='passwordconf']").val();
-            console.log('password2',password2,'sdsd',password);
-            if(password === password2) {
-                console.log(code,email,password);
-                resetPassword(code,email,password);
+            var password = $("input[name='password1']").val();
+            var password2 = $("input[name='passwordconf']").val();
+            console.log('password2', password2, 'sdsd', password);
+            if (password === password2) {
+                console.log(code, email, password);
+                resetPassword(code, email, password);
             }
             else
                 alert('Passwords dont match');
@@ -171,11 +175,9 @@
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script> -->
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>

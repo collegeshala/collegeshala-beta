@@ -129,7 +129,8 @@
           <form>
             <div class="form-group">
               <label for="exampleFormControlInput1">Enter Credits</label>
-              <input type="number" id="credits-redeem" class="form-control" id="" placeholder="Enter the amount of Credits">
+              <input type="number" id="credits-redeem" class="form-control" id=""
+                placeholder="Enter the amount of Credits">
             </div>
             <p>1 credits = Rs 10</p>
           </form>
@@ -241,7 +242,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.677.0.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.677.0.min.js"></script>
   <script src="./js/scroll.js"></script>
   <script src="js/email.js"></script>
   <script src="./js/checkuser.js"></script>
@@ -253,9 +254,11 @@
       credits: 0
     }
 
-    let token = localStorage.getItem("idToken");
+    // let token = localStorage.getItem("idToken");
 
     async function getEarnings() {
+      const token = await userAuth.authToken;
+
       function fetchEarnings() {
         return new Promise(function (resolve, reject) {
           $.ajax({
@@ -340,6 +343,13 @@
     $("#redeem-now").click(async () => {
 
       const token = await userAuth.authToken;
+      try {
+        const tryToken = await userAuth.authToken;
+        console.log(tryToken);
+      } catch (error) {
+        console.log('Error retrieving token')
+        console.error(error)
+      }
 
       function getSesKeys() {
         return new Promise(function (resolve, reject) {
@@ -386,10 +396,10 @@
       const prof = (await getProfDetails()).Item;
       const { credits, fullName, email } = prof;
 
-      if(toRedeem < 0 || (toRedeem * 10) % 10 != 0) {
+      if (toRedeem < 0 || (toRedeem * 10) % 10 != 0) {
         alert("Please enter a valid number!");
         return;
-      } else if(toRedeem > credits) {
+      } else if (toRedeem > credits) {
         alert("Credits to redeem cannot be greater than current credits!");
         return;
       }

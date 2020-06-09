@@ -203,52 +203,60 @@
     $("#search-notes").change(async function () {
       removeData();
       state.value = event.target.value;
+      localStorage.setItem("value", event.target.value);
+      const noteIds = new Set();
 
-      for (let i = 0; i <= 3; i++) {
-        if (i == 3) {
-          $("#no-notes").text("No Results Found");
+      for (let i = 0; i < 3; i++) {
+        let resp = await getNotes(state.keys[i]);
+        if (!resp.message) {
+          resp.forEach(note => {
+            let parsed_note = {};
+            for (x in note) {
+              parsed_note[x] = note[x].S || note[x].N || note[x].BOOL
+            }
+            if (!noteIds.has(parsed_note.noteId)) {
+              noteIds.add(parsed_note.noteId);
+              state.notes.push(parsed_note);
+            }
+          });
         } else {
-          let resp = await getNotes(state.keys[i])
-          if (!resp.message) {
-            state.notes = resp.map(note => {
-              let parsed_note = {};
-              for (x in note) {
-                parsed_note[x] = note[x].S || note[x].N || note[x].BOOL
-              }
-              return parsed_note;
-            });
-            setData();
-            break;
-          } else {
-            continue;
-          }
+          continue;
         }
+      }
+      console.log(state.notes.length);
+      if (state.notes.length == 0) {
+        $("#no-notes").text("No Results Found");
+      } else {
+        setData();
       }
     });
 
     async function getSearchResult() {
       state.value = localStorage.getItem("value");
-      // localStorage.removeItem("value");
 
-      for (let i = 0; i <= 3; i++) {
-        if (i == 3) {
-          $("#no-notes").text("No Results Found");
+      const noteIds = new Set();
+
+      for (let i = 0; i < 3; i++) {
+        let resp = await getNotes(state.keys[i]);
+        if (!resp.message) {
+          resp.forEach(note => {
+            let parsed_note = {};
+            for (x in note) {
+              parsed_note[x] = note[x].S || note[x].N || note[x].BOOL
+            }
+            if (!noteIds.has(parsed_note.noteId)) {
+              noteIds.add(parsed_note.noteId);
+              state.notes.push(parsed_note);
+            }
+          });
         } else {
-          let resp = await getNotes(state.keys[i])
-          if (!resp.message) {
-            state.notes = resp.map(note => {
-              let parsed_note = {};
-              for (x in note) {
-                parsed_note[x] = note[x].S || note[x].N || note[x].BOOL
-              }
-              return parsed_note;
-            });
-            setData();
-            break;
-          } else {
-            continue;
-          }
+          continue;
         }
+      }
+      if (state.notes.length == 0) {
+        $("#no-notes").text("No Results Found");
+      } else {
+        setData();
       }
     };
 
@@ -259,6 +267,7 @@
     }
 
     function getNotes(key) {
+      // console.log(state.value, key);
       return new Promise((resolve, reject) => {
         $.ajax({
           method: 'POST',
@@ -273,6 +282,7 @@
             resolve(result);
           },
           error: function error(err) {
+            console.log(err);
             reject(err);
           }
         });
