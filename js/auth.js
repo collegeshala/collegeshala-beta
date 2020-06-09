@@ -1,5 +1,5 @@
 //var userAuth = window.userAuth || {};
-window.userAuth = {}
+window.userAuth = {};
 
 var signinUrl = "login.html";
 
@@ -8,7 +8,7 @@ var poolData = {
     ClientId: _config.cognito.userPoolClientId,
 };
 
-var  userPool;
+var userPool;
 
 if (
     !(
@@ -40,13 +40,26 @@ const parseJwt = (token) => {
 
 const sessionExpire = (token) => {
     sessionExp = parseJwt(token).exp;
+    // console.log(parseJwt(localStorage.getItem("idToken")));
     curr = new Date().getTime();
     curr = curr / 1000;
-    console.log(sessionExp, curr);
     if (curr > sessionExp) {
         return true;
     }
     return false;
+};
+
+const compareTime = (token) => {
+    const tokenDet = parseJwt(token);
+    let curr = new Date().getTime();
+    curr = curr / 1000;
+    console.log({
+        exp: tokenDet.exp,
+        iat: tokenDet.iat,
+        curr,
+        timeLeft: `${parseInt((tokenDet.exp - curr) / 60)} mins`,
+    });
+    // console.log(token);
 };
 
 userAuth.authToken = new Promise(function fetchCurrentAuthToken(
@@ -58,11 +71,15 @@ userAuth.authToken = new Promise(function fetchCurrentAuthToken(
     if (cognitoUser) {
         cognitoUser.getSession(function sessionCallback(err, session) {
             if (err) {
+                console.error(Error("Could not get session"));
                 reject(err);
             } else if (!session.isValid()) {
+                console.error(Error("Invalid session!"));
                 resolve(null);
             }
             if (sessionExpire(session.getIdToken().getJwtToken())) {
+                console.error(Error("Session expired :-/"));
+                return;
                 if (
                     window.location.pathname != "/register.html" &&
                     window.location.pathname != "/login.html" &&
@@ -73,6 +90,7 @@ userAuth.authToken = new Promise(function fetchCurrentAuthToken(
                 )
                     window.location.href = "/login.html";
             } else {
+                compareTime(session.getIdToken().getJwtToken());
                 resolve(session.getIdToken().getJwtToken());
             }
         });
