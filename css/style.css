@@ -2185,3 +2185,11 @@
 #Blog-section .card-title {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+#Blog-section a {
+  background-color: #6534cc;
+}
+
+#Blog-section a:hover {
+  background-color: #46248f;
+}
