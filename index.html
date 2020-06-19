@@ -50,6 +50,10 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <div class="mr-auto"></div>
         <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link scroll index-nav-link" href="#" onclick="location.href='/blog.html';" data-toggle="collapse"
+              data-target=".navbar-collapse.show"><span id="nav-font">Blogs</span></a>
+          </li>
           <li class="nav-item active">
             <a class="nav-link scroll index-nav-link" href="#services" data-toggle="collapse"
               data-target=".navbar-collapse.show"><span id="nav-font">Services</span></a>
@@ -163,8 +167,20 @@
         <button class="pill-button"></button>
       </p>
     </div>
+    <h1 class="text-center">
+      We Serve
+    </h1>
     
-    
+    <div class="we-serve-grid">
+      <div class="images"><img src="./assets/images/serving-college-logos/amity.jpg" class="image-resize" alt=""></div>
+      <div class="images"><img src="./assets/images/serving-college-logos/barasat.png" class="image-resize" alt=""></div>
+      <div class="images"><img src="./assets/images/serving-college-logos/jadavpur.jpg" class="image-resize" alt=""></div>
+      <div class="images"><img src="./assets/images/serving-college-logos/makaut.jpg" class="image-resize" alt=""></div>
+      <div class="images"><img src="./assets/images/serving-college-logos/techno.jpg" class="image-resize" alt=""></div>
+      <div class="images"><img src="./assets/images/serving-college-logos/university-of-calcutta.png" class="image-resize" alt=""></div>
+      
+      
+  </div>
 
     <div class="container mt-5">
       <h1 class="text-center p-4 talkshala-h1">
@@ -331,10 +347,10 @@
 
     $("#search-input").on("change keypress", function (event) {
       // console.log(event.type)
-      if (event.keyCode && event.keyCode == '13') {
+      if(event.keyCode && event.keyCode == '13') {
         localStorage.setItem("value", event.target.value);
         window.location.pathname = "/all-product.html";
-      } else if (event.type == "change") {
+      } else if(event.type == "change") {
         localStorage.setItem("value", event.target.value);
         window.location.pathname = "/all-product.html";
       }
