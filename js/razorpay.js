@@ -11,9 +11,6 @@ function checkout(amount, credits, authToken) {
         payment_capture: "1",
         image: "https://example.com/your_logo",
         handler: function (response) {
-            // alert("Payment Successful. Adding Credits to your account ... ");
-            //call purchaseCredits api here
-
             console.log(response);
             completePurchase(
                 response.razorpay_payment_id,

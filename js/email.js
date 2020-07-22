@@ -1,5 +1,4 @@
 function sendMailAlert({ name, email, amount }, ses) {
-
     let emailBody = `<h3>Hello from CollegeShala</h3>
     <h4>We have received your request for withdrawal amount &#8377; ${amount}.</h4>
     <h4>It will be reflected in your account within 72 hours.</h4>
@@ -55,7 +54,7 @@ function sendMailAlert({ name, email, amount }, ses) {
             },
         },
         Destination: {
-            ToAddresses: ["collegeshala2020@gmail.com",],
+            ToAddresses: ["collegeshala2020@gmail.com"],
         },
         Source: "collegeshala2020@gmail.com",
     };
@@ -65,7 +64,9 @@ function sendMailAlert({ name, email, amount }, ses) {
         // an error occurred
         else {
             console.log(JSON.stringify(data)); // successful response
-            alert("Your request for redeeming credits have been acknowledged. Please check your mail.")
+            alert(
+                "Your request for redeeming credits have been acknowledged. Please check your mail."
+            );
         }
     });
 }
