@@ -1,6 +1,6 @@
 function checkout(amount, credits, authToken) {
     //const razorpayidtest = "rzp_test_M1E05195gJPCyO";
-    const razorpayid = "rzp_live_qTODP5D57Nb6U3";
+    const razorpayid = "rzp_live_og3WnLF8qiaveP";
     //const secrettest = "6epZ0Sbl7HvZzo1Ur8mfX74S"
     var options = {
         key: razorpayid,
@@ -9,7 +9,7 @@ function checkout(amount, credits, authToken) {
         name: "CollegeShala",
         description: "Purchase Credits",
         payment_capture: "1",
-        image: "https://example.com/your_logo",
+        image: "../assets/logo/CollegeShala.png",
         handler: function (response) {
             console.log(response);
             completePurchase(

@@ -2148,3 +2148,33 @@
 #custom-carousel .custom-img {
    height: 720px; 
 }
+
+/*
+            ************
+        Professor-info Page Styles Ends
+            ************
+*/
+
+/*
+            ************
+        Blog Page Styles Starts
+            ************
+*/
+
+#Blog-section .card-custom-image {
+  height: 200px;
+}
+
+#Blog-section .card-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#Blog-section a {
+  background-color: #6534cc;
+  border-color: #6534cc;
+}
+
+#Blog-section a:hover {
+  background-color: #46248f;
+  border-color: #46248f;
+}
